@@ -10,9 +10,13 @@ const fetchBooksError = () => ({
 	type: FETCH_BOOKS_ERROR,
 });
 
-export const loadBooks = () => async (dispatch) => {
+export const loadBooks = ({
+	page = 1,
+	itemsPerPage = 20,
+	filters = [],
+}={}) => async (dispatch) => {
 	try {
-		let response = await doPost();
+		let response = await doPost({ page, itemsPerPage, filters });
 		if (response.status === 200) {
 			dispatch(storeBooks(response.data));
 		} else {

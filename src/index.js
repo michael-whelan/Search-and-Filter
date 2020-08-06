@@ -5,8 +5,8 @@ import H4 from "./components/H4";
 import configureStore from "./store/index";
 import { createGlobalStyle } from "styled-components";
 import theme from "./theme";
-import { loadBooks } from './store/Books/actions';
-
+import { loadBooks } from "./store/Books/actions";
+import MainAreaContainer from "./containers/MainAreaContainer";
 
 const store = configureStore();
 store.dispatch(loadBooks());
@@ -20,14 +20,13 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const App = () => {
-	return <H4>My Book Repo</H4>;
-};
+const App = () => {};
 
 ReactDOM.render(
 	<Provider store={store}>
 		<GlobalStyle />
-		<App />
+		<H4>My Book Repo</H4>
+		<MainAreaContainer />
 	</Provider>,
 	document.getElementById("root")
 );
