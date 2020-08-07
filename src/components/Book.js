@@ -14,19 +14,6 @@ const BookHeader = styled.div`
 	${theme.typography.h6};
 `;
 
-const Button = styled.button`
-	display: inline;
-	padding: 5px;
-	border-radius: 5px;
-	background: transparent;
-	border-style: solid;
-	border-width: 1px;
-	margin: 8px 8px 8px 0px;
-	border-color: ${theme.palette.primary.main};
-	color: ${theme.palette.primary.main};
-	${theme.typography.button};
-`;
-
 const Book = ({
 	book: {
 		id,

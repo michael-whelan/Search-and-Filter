@@ -20,8 +20,6 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const App = () => {};
-
 ReactDOM.render(
 	<Provider store={store}>
 		<GlobalStyle />

@@ -43,6 +43,7 @@ const MainAreaContainer = () => {
 	const [loading, setLoading] = useState(true);
 	const [page, setPage] = useState(1);
 	const dispatch = useDispatch();
+
 	const leftArea = () => {
 		return (
 			<Left>
@@ -56,10 +57,30 @@ const MainAreaContainer = () => {
 						)
 					}
 				></Search>
-				<Button disabled={page === 1} onClick={() => setPage(page - 1)}>
+				<Button
+					disabled={page === 1}
+					onClick={() => {
+						setPage(page - 1);
+						dispatch(
+							loadBooks({
+								page: page,
+							})
+						);
+					}}
+				>
 					Prev
 				</Button>
-				<Button page={page} onClick={() => setPage(page + 1)}>
+				<Button
+					page={page}
+					onClick={() => {
+						setPage(page + 1);
+						dispatch(
+							loadBooks({
+								page: page,
+							})
+						);
+					}}
+				>
 					Next
 				</Button>
 			</Left>

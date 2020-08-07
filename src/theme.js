@@ -3,7 +3,7 @@ const theme = {
 		primary: {
 			main: "#FF5500",
 			light: "#FD6E35",
-			dark: "#CC4400",
+			dark: "#b33c00",
 		},
 		secondary: {
 			main: "#FF5500",
