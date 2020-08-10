@@ -7,7 +7,7 @@ import { createGlobalStyle } from "styled-components";
 import theme from "./theme";
 import { loadBooks } from "./store/Books/actions";
 import MainAreaContainer from "./containers/MainAreaContainer";
-import { Route, BrowserRouter } from "react-router-dom";
+import { Route, BrowserRouter,Redirect } from "react-router-dom";
 
 const store = configureStore();
 store.dispatch(loadBooks());
@@ -26,6 +26,9 @@ ReactDOM.render(
 		<BrowserRouter>
 			<GlobalStyle />
 			<H4>My Book Repo</H4>
+			<Route exact path="/">
+				<Redirect to="/1" />
+			</Route>
 			<Route path="/:page/" component={MainAreaContainer} />
 		</BrowserRouter>
 	</Provider>,
