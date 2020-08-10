@@ -17,4 +17,4 @@ npm start
 
 
 ### `Preview`
-
+![previewgif](https://github.com/michael-whelan/Front-end-task/blob/master/preview.gif)
