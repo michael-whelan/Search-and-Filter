@@ -5,6 +5,8 @@ import styled, { css } from "styled-components";
 import theme from "../theme";
 import { loadBooks } from "../store/Books/actions";
 import Search from "../components/Search";
+import { useHistory } from "react-router";
+import { withRouter, useRouteMatch } from "react-router-dom";
 
 const Message = styled.div`
 	display: block;
@@ -40,45 +42,56 @@ const Left = styled.div`
 
 const MainAreaContainer = () => {
 	const books = useSelector((state) => state.books.bookList.books);
+	const bookCount = useSelector((state) => state.books.bookList.count);
 	const [loading, setLoading] = useState(true);
-	const [page, setPage] = useState(1);
+
+	const history = useHistory();
 	const dispatch = useDispatch();
+
+	const {
+		params: { page, searchVal = "" },
+	} = useRouteMatch("/:page/:searchVal?");
+
+	const handlePager = (diff) => {
+		const nextPage = parseInt(page) + diff;
+		history.push(`/${nextPage}/${searchVal}`);
+	};
+
+	useEffect(() => {
+		page &&
+			dispatch(
+				loadBooks({
+					page: page,
+					filters: [{ type: "all", values: [searchVal] }],
+				})
+			);
+	}, [page, searchVal]);
+
+	useEffect(() => {
+		books && setLoading(false);
+	}, [books]);
 
 	const leftArea = () => {
 		return (
 			<Left>
 				<Search
 					placeholder={"Search..."}
-					search={(val) =>
-						dispatch(
-							loadBooks({
-								filters: [{ type: "all", values: [val] }],
-							})
-						)
-					}
+					search={(val) => {
+						history.push(`/1/${val}`);
+					}}
 				></Search>
 				<Button
-					disabled={page === 1}
+					disabled={parseInt(page) === 1}
 					onClick={() => {
-						setPage(page - 1);
-						dispatch(
-							loadBooks({
-								page: page,
-							})
-						);
+						handlePager(-1);
 					}}
 				>
 					Prev
 				</Button>
 				<Button
-					page={page}
+					disabled={parseInt(page) === Math.ceil(bookCount / 20)}
 					onClick={() => {
-						setPage(page + 1);
-						dispatch(
-							loadBooks({
-								page: page,
-							})
-						);
+						handlePager(1);
 					}}
 				>
 					Next
@@ -86,9 +99,6 @@ const MainAreaContainer = () => {
 			</Left>
 		);
 	};
-	useEffect(() => {
-		books && setLoading(false);
-	}, [books]);
 
 	return (
 		<>
@@ -102,4 +112,4 @@ const MainAreaContainer = () => {
 	);
 };
 
-export default MainAreaContainer;
+export default withRouter(MainAreaContainer);
